@@ -1,6 +1,6 @@
-import { FinancialData } from './FinancialData.model';
-import { AddressData } from './AddressData.model';
-import { SecurityData } from './SecurityData.model';
+import { FinancialData } from './financial-data.model';
+import { AddressData } from './address-data.model';
+import { SecurityData } from './security-data.model';
 
 export class CreateClient {
     public name: string;

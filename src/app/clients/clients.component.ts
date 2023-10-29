@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ClientDataService } from '../database-services/client.data-service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreateClient } from './models/CreateClient.model';
+import { CreateClient } from './models/create-client.model';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css']
+  styleUrls: ['./clients.component.css'],
 })
+
 export class ClientsComponent implements OnInit {
-  
   clients = {
       name: '',
       birthDate: '',
@@ -22,7 +24,7 @@ export class ClientsComponent implements OnInit {
       patrimony: 0,
     },
     addressData: {
-      cep: '',
+      zipCode: '',
       address: '',
       number: 0,
       district: '',
@@ -35,9 +37,9 @@ export class ClientsComponent implements OnInit {
     }
   };
 
-  dateNow: number = Date.now();
+  constructor (private router: Router, private http: HttpClient, private clientDataService: ClientDataService) { }
 
-  constructor (private http: HttpClient, private clientDataService: ClientDataService) { }
+  ngOnInit() { }
 
   // Enviando dados do formulário para a base da dados
   onSubmit() {
@@ -50,7 +52,7 @@ export class ClientsComponent implements OnInit {
     createClient.phoneNumber = this.clients.phone;
     createClient.financialData.income = this.clients.financialData.income;
     createClient.financialData.patrimony = this.clients.financialData.patrimony;
-    createClient.addressData.zipCode = this.clients.addressData.cep;
+    createClient.addressData.zipCode = this.clients.addressData.zipCode;
     createClient.addressData.address = this.clients.addressData.address;
     createClient.addressData.number = this.clients.addressData.number;
     createClient.addressData.district = this.clients.addressData.district;
@@ -59,24 +61,30 @@ export class ClientsComponent implements OnInit {
     createClient.securityData.password = this.clients.securityData.password;
     createClient.securityData.passwordConfirmation = this.clients.securityData.passwordConfirmation;
 
-    this.clientDataService.sendDataToDatabase(createClient).subscribe(
+    this.clientDataService.sendDataToDatabase(createClient).pipe(
+      tap(() => {
+        // A ação de navegação ocorrerá aqui após o sucesso
+        this.router.navigate(['new-client']);
+      })
+    )
+    .subscribe(
       (response) => {
-        alert('Cadastro do usuário enviado para análise');
-    }, (Error => {
-      alert('Ocorreu um erro!');
-    }))
+        // Sucesso da operação
+      },
+      (error) => {
+        alert('Ocorreu um erro!');
+      }
+    );
   }
 
-  ngOnInit() { }
-
-  searchCep() {
-    const cep = this.clients.addressData.cep;
+  searchZipCode() {
+    const zipCode = this.clients.addressData.zipCode;
   
-    if (cep) {
+    if (zipCode) {
       // Fazer uma solicitação HTTP para a API do Cep Rápido
-      this.http.get(`https://ceprapido.com/api/addresses/${cep}`).subscribe((data: any) => {
-        this.clients.addressData.address = data[0].addressName,
-        this.clients.addressData.number = 0,
+      this.http.get(`https://ceprapido.com/api/addresses/${zipCode}`).subscribe((data: any) => {
+        this.clients.addressData.address = data[0].addressName;
+        this.clients.addressData.number = 0;
         this.clients.addressData.district = data[0].districtName;
         this.clients.addressData.city = data[0].cityName;
         this.clients.addressData.state = data[0].stateCode;
