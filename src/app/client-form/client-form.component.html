@@ -1,0 +1,107 @@
+<div>
+    <h4 class="form-title m-6 text-justify p-3">Formulário de Cadastro</h4>
+    <h5 class="text-justify form-subtitle p-3">
+        Bem-vindo ao nosso serviço! Por favor, preencha o formulário abaixo para criar sua conta.
+    </h5>
+</div>
+<form #f="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group basics">
+        <div class="p-3">
+            <label for="name" class="pb-2">Nome</label>
+            <input type="text" class="form-control input-form" id="name" [(ngModel)]="clients.name" name="name" placeholder="Nome completo"
+            required #name="ngModel">
+        <div class="text-danger mt-2" *ngIf="!name.valid && name.touched">Campo obrigatório.</div>
+        </div>
+        <div class="row wrap">
+            <p></p>
+            <div fxFlex="50" fxFill fxLayoutAlign="start center">
+                <mat-form-field class="p-3">
+                    <mat-label>Data de nascimento</mat-label>
+                    <input matInput [matDatepicker]="picker" id="birthDate" [(ngModel)]="clients.birthDate" required #birthDate>
+                    <mat-hint>mês/dia/ano</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="form-group p-3">
+            <label for="cpf" class="pb-2">CPF</label>
+            <input type="text" class="form-control input-form" id="cpf" [(ngModel)]="clients.cpf" name="cpf" placeholder="CPF"
+            required #cpf="ngModel">
+            <div class="text-danger mt-2" *ngIf="!cpf.valid ">Por favor, informe um CPF válido com 11 dígitos.</div>
+            <!-- <div class="text-muted mt-2">Informe um CPF válido com 11 dígitos.</div> -->
+        </div>
+        <div class="p-3">
+            <label for="email" class="pb-2">E-mail</label>
+            <input type="text" class="form-control input-form" id="email" [(ngModel)]="clients.email" name="email" placeholder="email@exemplo.com"
+            required email #email="ngModel">
+            <div class="text-danger mt-2" *ngIf="!email.valid && email.touched">Por favor, informe um e-mail válido.</div>
+        </div>
+        <div class="p-3">
+            <label for="phone" class="pb-2">Telefone</label>
+            <input type="text" class="form-control input-form" id="phone" [(ngModel)]="clients.phone" name="phone" placeholder="Telefone"
+            required #phone="ngModel">
+            <div class="text-danger mt-2" *ngIf="!phone.valid && phone.touched">Por favor, informe um telefone válido.</div>
+        </div>
+    </div>
+    <div class="form-group row financial p-3">
+        <div class="col-md-6">
+            <label for="income" class="pb-2">Renda</label>
+            <input type="text" class="form-control input-form financial" id="income" [(ngModel)]="clients.financialData.income" name="income" placeholder=""
+            required #income="ngModel">
+            <!-- <div class="text-danger mt-2" *ngIf="!income.valid">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div> -->
+            <div class="text-muted mt-2">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div>
+        </div>
+        <div class="col-md-6">
+            <label for="patrimony" class="pb-2">Patrimônio</label>
+            <input type="text" class="form-control input-form financial" id="patrimony" [(ngModel)]="clients.financialData.patrimony" name="patrimony" placeholder=""
+            required #patrimony="ngModel">
+            <!-- <div class="text-danger mt-2" *ngIf="!patrimony.valid">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div> -->
+            <div class="text-muted mt-2">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div>
+        </div>
+    </div>
+    <div class="row p-3">
+        <div class="form-group col-md-2">
+            <label for="zipCode" class="pb-2">CEP</label>
+            <input type="text" class="form-control" id="zipCode" [(ngModel)]="clients.addressData.zipCode" name="zipCode" placeholder="" required #zipCode="ngModel"
+            (blur)="searchZipCode()">
+            <!-- <div class="text-danger mt-2" *ngIf="!cep.valid && cep.touched">Por favor, informe um CEP válido.</div> -->
+            <!-- <button type="button" class=" btn btn-primary" (click)="searchCep()">Buscar CEP</button> -->
+        </div>
+        <div class="form-group col-md-8">
+            <label for="address" class="pb-2">Rua</label>
+            <input type="text" class="form-control" id="address" [(ngModel)]="clients.addressData.address" name="address" #address="ngModel"> 
+        </div>
+        <div class="form-group col-md-2">
+            <label for="number" class="pb-2">Número</label>
+            <input type="text" class="form-control" id="number" [(ngModel)]="clients.addressData.number" name="number" #number="ngModel">
+        </div>
+    </div>
+    <div class="row p-3">
+        <div class="form-group col-md-5">
+            <label for="district" class="pb-2">Bairro</label>
+            <input type="text" class="form-control" id="district" [(ngModel)]="clients.addressData.district" name="district" placeholder="" required #district="ngModel">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="city" class="pb-2">Cidade</label>
+            <input type="text" class="form-control" id="city" [(ngModel)]="clients.addressData.city" name="city" #city="ngModel">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="state" class="pb-2">Estado</label>
+            <input type="text" class="form-control" id="state" [(ngModel)]="clients.addressData.state" name="state" #state="ngModel">
+        </div>
+    </div>
+    <div class="row p-3">
+        <div class="form-group col-md-6">
+            <label for="inputPassword" class="pb-2">Senha</label>
+            <input type="text" class="form-control" id="inputPassword" [(ngModel)]="clients.securityData.password" name="password" placeholder="" required pattern="^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[@!$#%^&*])[A-Za-z0-9@!$#%^&*]{8,}$" #password="ngModel">
+            <div class="text-danger mt-2" *ngIf="!password.valid">Deve conter 8 caracters com no mínimo um número, uma letra e um símbolo.</div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="passwordConfirmation" class="pb-2">Confirmação de senha</label>
+            <input type="text" class="form-control" id="passwordConfirmation" [(ngModel)]="clients.securityData.passwordConfirmation" name="passwordConfirmation" placeholder="" required pattern="^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[@!$#%^&*])[A-Za-z0-9@!$#%^&*]{8,}$">
+            <div class="text-muted mt-2">Informe a mesma senha.</div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary text-center" [disabled]="!f.valid">Enviar</button>
+</form>

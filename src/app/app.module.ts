@@ -14,12 +14,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import { NewClientComponent } from './new-client/new-client.component';
+import { ClientFormComponent } from './client-form/client-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ClientsComponent,
     NewClientComponent,
+    ClientFormComponent,
   ],
   imports: [
     BrowserModule,
