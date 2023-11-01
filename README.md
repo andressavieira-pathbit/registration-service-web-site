@@ -10,4 +10,4 @@ Após instalar as dependências, entre na pasta "\resgistration-service" e rode 
 
 ## Preenchendo o formulário
 
-Preencha o formulário de cadastro envie para a análise.
+Preencha o formulário de cadastro e envie para a análise.
