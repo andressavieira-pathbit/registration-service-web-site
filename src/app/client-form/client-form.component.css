@@ -1,0 +1,44 @@
+.text-form {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+input {
+    margin: auto;
+}
+
+.form-title {
+    margin-top: 30px;
+}
+
+.form-subtitle {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.form {
+    margin-top: 40px;
+}
+
+.address {
+    margin-top: 5px;
+    padding-top: 10px;
+}
+
+.pass {
+    margin-top: 5px;
+    padding-top: 10px;
+}
+
+.titles {
+    color: #380F43;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding-top: 12px;
+}
+
+.date-picker {
+    padding-top: 4px;
+    padding-left: 4px;
+}

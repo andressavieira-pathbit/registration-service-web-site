@@ -1,9 +1,9 @@
 export class FinancialData {
-    public income: number;
-    public patrimony: number;
+    public income?: number;
+    public patrimony?: number;
 
     constructor() {
-        this.income = 0;
-        this.patrimony = 0;
+        this.income;
+        this.patrimony;
     }
 }

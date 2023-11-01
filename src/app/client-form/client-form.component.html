@@ -1,107 +1,115 @@
 <div>
-    <h4 class="form-title m-6 text-justify p-3">Formulário de Cadastro</h4>
-    <h5 class="text-justify form-subtitle p-3">
-        Bem-vindo ao nosso serviço! Por favor, preencha o formulário abaixo para criar sua conta.
-    </h5>
+    <h4 class="form-title m-6 text-justify p-4 text-form" style="font-family: 'Sniglet', cursive;">Cadastre-se</h4>
+    <h4 class="text-justify form-subtitle p-4">
+        Bem-vindo ao nosso serviço! Por favor, preencha corretamente o formulário abaixo para criar sua conta.
+    </h4>
 </div>
-<form #f="ngForm" (ngSubmit)="onSubmit()">
-    <div class="form-group basics">
-        <div class="p-3">
+<form #f="ngForm" (ngSubmit)="onSubmit()" class="">
+    <div class="basics">
+        <h5 class="titles mx-4" style="font-family: 'Sniglet', cursive;">Básico</h5>
+        <div class="p-4">
             <label for="name" class="pb-2">Nome</label>
             <input type="text" class="form-control input-form" id="name" [(ngModel)]="clients.name" name="name" placeholder="Nome completo"
             required #name="ngModel">
-        <div class="text-danger mt-2" *ngIf="!name.valid && name.touched">Campo obrigatório.</div>
+        <div class="text-danger" *ngIf="!name.valid && name.touched">Campo obrigatório com no minímo 5 letras.</div>
         </div>
-        <div class="row wrap">
-            <p></p>
-            <div fxFlex="50" fxFill fxLayoutAlign="start center">
-                <mat-form-field class="p-3">
-                    <mat-label>Data de nascimento</mat-label>
-                    <input matInput [matDatepicker]="picker" id="birthDate" [(ngModel)]="clients.birthDate" required #birthDate>
-                    <mat-hint>mês/dia/ano</mat-hint>
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="form-group p-3">
+        <mat-form-field class="date-picker mx-auto px-4">
+            <label for="cpf" class="pb-2">Data de nascimento</label>
+            <input type="text" matInput [matDatepicker]="picker" placeholder="Escolha uma data" [(ngModel)]="clients.birthDate" name="birthDate" required #birthDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <div class="text-danger" *ngIf="!birthDate.valid && birthDate.touched">O usuário deve ter no mínimo 18 anos.</div>
+        </mat-form-field>
+        <div class="p-4 mx-auto">
             <label for="cpf" class="pb-2">CPF</label>
-            <input type="text" class="form-control input-form" id="cpf" [(ngModel)]="clients.cpf" name="cpf" placeholder="CPF"
+            <input type="text" class="form-control input-form" id="cpf" [(ngModel)]="clients.cpf" name="cpf" placeholder="00000000000"
             required #cpf="ngModel">
-            <div class="text-danger mt-2" *ngIf="!cpf.valid ">Por favor, informe um CPF válido com 11 dígitos.</div>
-            <!-- <div class="text-muted mt-2">Informe um CPF válido com 11 dígitos.</div> -->
+            <div class="text-danger" *ngIf="!cpf.valid && cpf.touched">Informe um CPF válido.</div>
         </div>
-        <div class="p-3">
-            <label for="email" class="pb-2">E-mail</label>
+        <div class="p-4 mx-auto">
+            <label for="email" class="pb-2 form-group">E-mail</label>
             <input type="text" class="form-control input-form" id="email" [(ngModel)]="clients.email" name="email" placeholder="email@exemplo.com"
             required email #email="ngModel">
-            <div class="text-danger mt-2" *ngIf="!email.valid && email.touched">Por favor, informe um e-mail válido.</div>
+            <div class="text-danger" *ngIf="!email.valid && email.touched">Informe um e-mail válido.</div>
         </div>
-        <div class="p-3">
+        <div class="form-group mx-auto p-4">
             <label for="phone" class="pb-2">Telefone</label>
-            <input type="text" class="form-control input-form" id="phone" [(ngModel)]="clients.phone" name="phone" placeholder="Telefone"
+            <input type="text" class="form-control input-form" id="phone" [(ngModel)]="clients.phone" name="phone" placeholder="1190000-0000"
             required #phone="ngModel">
-            <div class="text-danger mt-2" *ngIf="!phone.valid && phone.touched">Por favor, informe um telefone válido.</div>
+            <div class="text-danger" *ngIf="!phone.valid && phone.touched">Informe um telefone válido.</div>
         </div>
     </div>
-    <div class="form-group row financial p-3">
-        <div class="col-md-6">
+    <div class="mx-auto">
+        <h5 class="titles mx-4" style="font-family: 'Sniglet', cursive;">Financeiro</h5>
+        <div class="col-md-6 p-4">
             <label for="income" class="pb-2">Renda</label>
             <input type="text" class="form-control input-form financial" id="income" [(ngModel)]="clients.financialData.income" name="income" placeholder=""
             required #income="ngModel">
-            <!-- <div class="text-danger mt-2" *ngIf="!income.valid">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div> -->
-            <div class="text-muted mt-2">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div>
         </div>
-        <div class="col-md-6">
+        <div class="form-group col-md-6 p-4">
             <label for="patrimony" class="pb-2">Patrimônio</label>
             <input type="text" class="form-control input-form financial" id="patrimony" [(ngModel)]="clients.financialData.patrimony" name="patrimony" placeholder=""
             required #patrimony="ngModel">
-            <!-- <div class="text-danger mt-2" *ngIf="!patrimony.valid">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div> -->
-            <div class="text-muted mt-2">É necessário que a soma da renda e do patrimônio seja superior a 1000.</div>
+            <div class="text-danger" *ngIf="!patrimony.valid && patrimony.touched">A soma da renda e do patrimônio precisar ser superior a 1000.</div>
         </div>
     </div>
-    <div class="row p-3">
-        <div class="form-group col-md-2">
+    <div class="mx-auto address">
+        <h5 class="titles mx-4" style="font-family: 'Sniglet', cursive;">Endereço</h5>
+        <div class="col-md-2 p-4">
             <label for="zipCode" class="pb-2">CEP</label>
-            <input type="text" class="form-control" id="zipCode" [(ngModel)]="clients.addressData.zipCode" name="zipCode" placeholder="" required #zipCode="ngModel"
+            <input type="text" class="form-control" id="zipCode" [(ngModel)]="clients.addressData.zipCode" name="zipCode" placeholder="Ex.: 00000000" required #zipCode="ngModel"
             (blur)="searchZipCode()">
-            <!-- <div class="text-danger mt-2" *ngIf="!cep.valid && cep.touched">Por favor, informe um CEP válido.</div> -->
-            <!-- <button type="button" class=" btn btn-primary" (click)="searchCep()">Buscar CEP</button> -->
+            <!-- <div class="text-muted mt-2 p-1">Informe um CEP válido.</div> -->
         </div>
-        <div class="form-group col-md-8">
+        <div class="col-md-8 p-4">
             <label for="address" class="pb-2">Rua</label>
-            <input type="text" class="form-control" id="address" [(ngModel)]="clients.addressData.address" name="address" #address="ngModel"> 
+            <input type="text" class="form-control" id="address" [(ngModel)]="clients.addressData.address" name="address" placeholder="Preenchimento automático" #address="ngModel">
         </div>
-        <div class="form-group col-md-2">
+        <div class="col-md-2 p-4">
             <label for="number" class="pb-2">Número</label>
-            <input type="text" class="form-control" id="number" [(ngModel)]="clients.addressData.number" name="number" #number="ngModel">
+            <input type="text" class="form-control" id="number" [(ngModel)]="clients.addressData.number" name="number" required #number="ngModel">
+            <div class="text-danger" *ngIf="!number.valid && number.touched">Informe um número.</div>
         </div>
     </div>
-    <div class="row p-3">
-        <div class="form-group col-md-5">
+    <div class="mx-auto">
+        <div class="col-md-5 p-4">
             <label for="district" class="pb-2">Bairro</label>
-            <input type="text" class="form-control" id="district" [(ngModel)]="clients.addressData.district" name="district" placeholder="" required #district="ngModel">
+            <input type="text" class="form-control" id="district" [(ngModel)]="clients.addressData.district" name="district" placeholder="Preenchimento automático" required #district="ngModel">
         </div>
-        <div class="form-group col-md-4">
+        <div class="col-md-5 p-4">
             <label for="city" class="pb-2">Cidade</label>
-            <input type="text" class="form-control" id="city" [(ngModel)]="clients.addressData.city" name="city" #city="ngModel">
+            <input type="text" class="form-control" id="city" [(ngModel)]="clients.addressData.city" name="city" placeholder="Preenchimento automático" #city="ngModel">
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2 p-4">
             <label for="state" class="pb-2">Estado</label>
-            <input type="text" class="form-control" id="state" [(ngModel)]="clients.addressData.state" name="state" #state="ngModel">
+            <input type="text" class="form-control" id="state" [(ngModel)]="clients.addressData.state" name="state" placeholder="Preenchimento automático" #state="ngModel">
         </div>
     </div>
-    <div class="row p-3">
-        <div class="form-group col-md-6">
-            <label for="inputPassword" class="pb-2">Senha</label>
-            <input type="text" class="form-control" id="inputPassword" [(ngModel)]="clients.securityData.password" name="password" placeholder="" required pattern="^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[@!$#%^&*])[A-Za-z0-9@!$#%^&*]{8,}$" #password="ngModel">
-            <div class="text-danger mt-2" *ngIf="!password.valid">Deve conter 8 caracters com no mínimo um número, uma letra e um símbolo.</div>
+    <div class="mx-auto pass">
+        <h5 class="titles mx-4 title-security" style="font-family: 'Sniglet', cursive;">Segurança</h5>
+        <div class="col-md-6 p-4">
+            <label for="exampleInputPassword1" class="pb-2">Senha</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" [(ngModel)]="clients.securityData.password" name="password" placeholder="Senha" required pattern="^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[@!$#%^&*])[A-Za-z0-9@!$#%^&*]{8,}$" #password="ngModel">
+            <div class="text-danger mt-2" *ngIf="!password.valid && password.touched">A senha deve conter 8 caracters com no mínimo um número, uma letra e um símbolo.</div>
         </div>
-        <div class="form-group col-md-6">
-            <label for="passwordConfirmation" class="pb-2">Confirmação de senha</label>
-            <input type="text" class="form-control" id="passwordConfirmation" [(ngModel)]="clients.securityData.passwordConfirmation" name="passwordConfirmation" placeholder="" required pattern="^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[@!$#%^&*])[A-Za-z0-9@!$#%^&*]{8,}$">
-            <div class="text-muted mt-2">Informe a mesma senha.</div>
+        <div class="col-md-6 p-4">
+            <label for="exampleInputPassword2" class="pb-2">Confirmação de senha</label>
+            <input type="password" class="form-control" id="exampleInputPassword2" [(ngModel)]="clients.securityData.passwordConfirmation" name="passwordConfirmation" placeholder="Confirmação de senha" required pattern="^(?=.*[0-9])(?=.*[A-Za-z])(?=.*[@!$#%^&*])[A-Za-z0-9@!$#%^&*]{8,}$">
+            <div class="text-muted">Informe a mesma senha.</div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary text-center" [disabled]="!f.valid">Enviar</button>
+    <div class="p-4 text-end container-button mx-auto">
+        <button type="submit" class="button btn btn-primary" style="background-color: #380F43" [disabled]="!f.valid">Criar</button>
+    </div>
 </form>
+<!-- <script src="http://sites.fullprog.com/testes/assets/js/jquery-1.9.1.min.js"></script>
+<script src="http://sites.fullprog.com/testes/assets/js/bootstrap.min.js"></script>
+<script src="http://sites.fullprog.com/testes/assets/datepicker/js/bootstrap-datepicker.js"></script>
+<script src="http://sites.fullprog.com/testes/assets/datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script type="text/javascript" src="bootstrap-datepicker.de.js" charset="UTF-8"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script> -->

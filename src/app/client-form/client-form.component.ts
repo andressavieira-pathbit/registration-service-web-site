@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ClientDataService } from '../database-services/client.data-service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { CreateClient } from '../clients/models/create-client.model';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
@@ -11,10 +10,11 @@ import { tap } from 'rxjs/operators';
   templateUrl: './client-form.component.html',
   styleUrls: ['./client-form.component.css']
 })
+
 export class ClientFormComponent  implements OnInit {
   clients = {
       name: '',
-      birthDate: '',
+      birthDate: new Date(''),
       cpf: '',
       email: '',
       phone: '',
@@ -46,6 +46,7 @@ export class ClientFormComponent  implements OnInit {
     const createClient = new CreateClient();
 
     createClient.name = this.clients.name;
+    createClient.birthDate = this.clients.birthDate;
     createClient.cpf = this.clients.cpf;
     createClient.email = this.clients.email;
     createClient.phoneNumber = this.clients.phone;
@@ -62,8 +63,8 @@ export class ClientFormComponent  implements OnInit {
 
     this.clientDataService.sendDataToDatabase(createClient).pipe(
       tap(() => {
-        // A ação de navegação ocorrerá aqui após o sucesso
-        this.router.navigate(['new-client']);
+        // O usuário será redirecionado para uma nova página
+        this.router.navigate(['under-analysis']);
       })
     )
     .subscribe(
@@ -88,6 +89,9 @@ export class ClientFormComponent  implements OnInit {
         this.clients.addressData.city = data[0].cityName;
         this.clients.addressData.state = data[0].stateCode;
       });
+    }
+    else {
+      alert('Ocorreu um erro ao consultar o CEP, tente novamente.')
     }
   } 
 }

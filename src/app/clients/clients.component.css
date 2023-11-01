@@ -1,19 +1,9 @@
-html {
-    color: black;
+.navbar {
+    border-radius: 0;
+    height: 60px;
+    margin: auto;
 }
 
-/* .ng-invalid.ng-touched:not(form) {
-    border: 1px solid;
-} */
-
-.form-title {
-    margin-top: 30px;
-}
-
-.form-subtitle {
-    margin-top: 10px;
-}
-
-.form {
-    margin-top: 40px;
+.title {
+    font-size: 21px;
 }
