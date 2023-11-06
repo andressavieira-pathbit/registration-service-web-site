@@ -1,4 +1,4 @@
-# RegistrationService Web Application
+# registration-service-web-site
 
 ## Instalando as dependências do projeto
 
